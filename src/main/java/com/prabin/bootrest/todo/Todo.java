@@ -4,8 +4,8 @@ import org.springframework.data.annotation.Id;
 
 public class Todo {
 	
-	static final int MAX_LENGTH_DESCRIPTION = 500;
-	static final int MAX_LENGTH_TITLE = 100;
+	public static final int MAX_LENGTH_DESCRIPTION = 500;
+	public static final int MAX_LENGTH_TITLE = 100;
 	
 	@Id
 	private String id;
@@ -16,13 +16,13 @@ public class Todo {
 	
 	public Todo() {}
 	
-	private Todo(Builder builder) {
+	private Todo(TodoBuilder builder) {
 		this.description = builder.description;
 		this.title = builder.title;
 	}
 	
-	public static Builder getBuilder() {
-		return new Builder();
+	public static TodoBuilder getBuilder() {
+		return new TodoBuilder();
 	}
 	
 	public String getId() {
@@ -53,23 +53,23 @@ public class Todo {
 		}
 	}
 
-	static class Builder {
+	public static class TodoBuilder {
 		private String description;
 		private String title;
 		
-		private Builder(){}
+		public TodoBuilder(){}
 		
-		Builder description(String description) {
+		public TodoBuilder description(String description) {
 			this.description = description;
 			return this;
 		}
 		
-		Builder title(String title) {
+		public TodoBuilder title(String title) {
 			this.title = title;
 			return this;
 		}
 		
-		Todo build() {
+		public Todo build() {
 			Todo build = new Todo(this);
 			build.checkTitleAndDescription(build.getTitle(), build.getDescription());
 			return build;

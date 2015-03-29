@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import scala.annotation.meta.getter;
 
 import com.prabin.bootrest.repository.TodoRepository;
 import com.prabin.bootrest.service.TodoService;
@@ -28,8 +27,21 @@ public class MongoDBTodoService implements TodoService {
 	public TodoDTO create(TodoDTO todo) {
 		LOGGER.info("Creating entry");
 		Todo persisted  = Todo.getBuilder()
-				.title()
-		return null;
+				.title(todo.getTitle())
+				.description(todo.getDescription())
+				.build();
+		
+		persisted = todoRepository.save(persisted);
+		LOGGER.info("Created new todo entry ");
+		return convertToDTO(persisted);
+	}
+
+	private TodoDTO convertToDTO(Todo model) {
+		TodoDTO dto = new TodoDTO();
+		dto.setId(model.getId());
+		dto.setTitle(model.getTitle());
+		dto.setDescription(model.getDescription());
+		return dto;
 	}
 
 	@Override
