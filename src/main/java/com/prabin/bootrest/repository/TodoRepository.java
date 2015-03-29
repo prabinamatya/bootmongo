@@ -1,9 +1,11 @@
-package com.prabin.bootrest.todo;
+package com.prabin.bootrest.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.Repository;
+
+import com.prabin.bootrest.todo.Todo;
 
 
 public interface TodoRepository extends Repository<Todo, String> {

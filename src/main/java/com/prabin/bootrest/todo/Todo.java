@@ -21,7 +21,7 @@ public class Todo {
 		this.title = builder.title;
 	}
 	
-	static Builder getBuilder() {
+	public static Builder getBuilder() {
 		return new Builder();
 	}
 	
