@@ -1,4 +1,6 @@
-package com.prabin.bootrest.dto;
+package com.prabin.bootrest.builder;
+
+import com.prabin.bootrest.dto.TodoDTO;
 
 public class TodoDTOBuilder  {
 	

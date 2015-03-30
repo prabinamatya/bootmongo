@@ -1,4 +1,4 @@
-package com.prabin.bootrest.dto;
+package com.prabin.bootrest.builder;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
