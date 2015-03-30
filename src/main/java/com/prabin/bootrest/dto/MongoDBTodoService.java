@@ -1,12 +1,12 @@
 package com.prabin.bootrest.dto;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import com.prabin.bootrest.repository.TodoRepository;
 import com.prabin.bootrest.service.TodoService;
@@ -46,7 +46,18 @@ public class MongoDBTodoService implements TodoService {
 
 	@Override
 	public TodoDTO delete(String id) {
-		return null;
+		LOGGER.info("Deleting a todo entry with id: ", id);
+		
+		Todo deleted = findTodoByid(id);
+		todoRepository.delete(deleted);
+		
+		LOGGER.info("Deleted entry with id: ", id);
+		return convertToDTO(deleted);
+	}
+
+	private Todo findTodoByid(String id) {
+		Optional<Todo> result = todoRepository.findOne(id);
+		return result.orElseThrow(() -> new TodoNotFoundException(id));
 	}
 
 	@Override
