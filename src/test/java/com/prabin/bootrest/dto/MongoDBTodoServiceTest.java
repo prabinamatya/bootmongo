@@ -58,7 +58,7 @@ public class MongoDBTodoServiceTest {
 		verifyNoMoreInteractions(mockTodoRepository);
 
 		Todo savedTodo = savedTodoArgument.getValue();
-		assertThatTodoDTO(savedTodo).hasTitle(TITLE).hasDescription(DESCRIPTION);
+		assertThatTodo(savedTodo).hasTitle(TITLE).hasDescription(DESCRIPTION);
 	}
 
 	@Test
@@ -83,7 +83,7 @@ public class MongoDBTodoServiceTest {
 		assertThat(todoEntries).hasSize(1);
 		
 		TodoDTO actual = todoEntries.iterator().next();
-		assertThatTodoDTO(actual).hasId(ID)
+		assertThatTodoDTO(actual).hasId(ID).hasTitle(TITLE).hasDescription(DESCRIPTION);
 	}
 
 }
