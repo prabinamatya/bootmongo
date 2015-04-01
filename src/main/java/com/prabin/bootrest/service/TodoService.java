@@ -10,7 +10,7 @@ public interface TodoService {
 	
 	TodoDTO delete(String id);
 	
-	List<TodoDTO> findAll(String id);
+	List<TodoDTO> findAll();
 	
 	TodoDTO update(TodoDTO todo);
 }

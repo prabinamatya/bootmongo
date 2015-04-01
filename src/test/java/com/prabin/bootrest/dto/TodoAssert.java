@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TodoAssert extends AbstractAssert<TodoAssert, Todo> {
 
-	protected TodoAssert(Todo actual, Class<?> selfType) {
+	public TodoAssert(Todo actual, Class<?> selfType) {
 		super(actual, selfType);
 	}
 
@@ -16,7 +16,7 @@ public class TodoAssert extends AbstractAssert<TodoAssert, Todo> {
 		super(actual, TodoAssert.class);
 	}
 
-	public static TodoAssert assertThatTodo(Todo actual) {
+	public static TodoAssert assertThatTodoDTO(Todo actual) {
 		return new TodoAssert(actual);
 	}
 

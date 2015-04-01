@@ -2,6 +2,7 @@ package com.prabin.bootrest.dto;
 
 import java.util.List;
 import java.util.Optional;
+import static java.util.stream.Collectors.toList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,9 +62,21 @@ public class MongoDBTodoService implements TodoService {
 	}
 
 	@Override
-	public List<TodoDTO> findAll(String id) {
-		return null;
+	public List<TodoDTO> findAll() {
+		LOGGER.info("finding all todo entries");
+		
+		List<Todo> todoEntries = todoRepository.findAll();
+		
+		LOGGER.info("Found todo entries of size", todoEntries.size());
+		return convertToDTOs(todoEntries);
 	}
+
+	private List<TodoDTO> convertToDTOs(List<Todo> models) {
+		return models.stream()
+				.map(this::convertToDTO)
+				.collect(toList());
+	}
+
 
 	@Override
 	public TodoDTO update(TodoDTO todo) {
