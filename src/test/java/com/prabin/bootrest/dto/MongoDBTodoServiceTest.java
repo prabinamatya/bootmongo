@@ -43,7 +43,7 @@ public class MongoDBTodoServiceTest {
 	}
 
 	@Test
-	public void testCreate_ShouldSaveNewTodoEntry() {
+	public void create_ShouldSaveNewTodoEntry() {
 		TodoDTO newTodo = new TodoDTOBuilder().title(TITLE)
 				.description(DESCRIPTION).id(ID).build();
 

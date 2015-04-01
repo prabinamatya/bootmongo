@@ -44,5 +44,25 @@ public class TodoDTOAssert extends AbstractAssert<TodoDTOAssert, TodoDTO> {
 		.isEqualTo(expectedTitle);
 		return this;
 	}
+	
+	public TodoDTOAssert hasNoId(String expectedId) {
+		isNotNull();
+		String actualId = actual.getId();
+		assertThat(actualId)
+		.overridingErrorMessage("Expected id to be null but was <%s>", 
+				expectedId, actualId)
+		.isNull();
+		return this;
+	}
 
+	public TodoDTOAssert hasNoDescription(String expectedDescription) {
+		isNotNull();
+		String actualDescription = actual.getDescription();
+		assertThat(actualDescription)
+			.overridingErrorMessage("Expected description to be null but was <%s>", 
+					expectedDescription, actualDescription)
+			.isNull();
+					
+		return this;
+	}
 }
