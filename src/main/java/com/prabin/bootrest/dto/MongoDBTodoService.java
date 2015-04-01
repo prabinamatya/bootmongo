@@ -1,8 +1,9 @@
 package com.prabin.bootrest.dto;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.List;
 import java.util.Optional;
-import static java.util.stream.Collectors.toList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +82,17 @@ public class MongoDBTodoService implements TodoService {
 	@Override
 	public TodoDTO update(TodoDTO todo) {
 		return null;
+	}
+
+	@Override
+	public TodoDTO findById(String id) {
+		LOGGER.info("finding todo by id", id);
+		
+		Todo found = findTodoByid(id);
+		
+		LOGGER.info("Found todo entry ", found);
+		
+		return convertToDTO(found);
 	}
 
 }

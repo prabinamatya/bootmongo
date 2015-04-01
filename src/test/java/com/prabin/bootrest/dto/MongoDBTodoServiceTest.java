@@ -2,6 +2,7 @@ package com.prabin.bootrest.dto;
 
 import static com.prabin.bootrest.dto.TodoAssert.assertThatTodo;
 import static com.prabin.bootrest.dto.TodoDTOAssert.assertThatTodoDTO;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,12 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.neo4j.cypher.internal.compiler.v2_1.planner.logical.findShortestPaths;
 
 import com.prabin.bootrest.builder.TodoBuilder;
 import com.prabin.bootrest.builder.TodoDTOBuilder;
@@ -84,6 +87,24 @@ public class MongoDBTodoServiceTest {
 		
 		TodoDTO actual = todoEntries.iterator().next();
 		assertThatTodoDTO(actual).hasId(ID).hasTitle(TITLE).hasDescription(DESCRIPTION);
+	}
+	
+	@Test
+	public void findById_ReturnsFoundTodoEntry() throws Exception {
+		Todo found = new TodoBuilder().id(ID).description(DESCRIPTION).title(TITLE).build();
+		
+		when(mockTodoRepository.findOne(ID)).thenReturn(Optional.of(found));
+		
+		TodoDTO returned = mongoDBTodoService.findById(ID);
+		
+		assertThatTodoDTO(returned).hasId(ID).hasTitle(TITLE).hasDescription(DESCRIPTION);
+	}
+	
+	@Test(expected = TodoNotFoundException.class)
+	public void findById_IfNotFoundThrowException() throws Exception {
+		when(mockTodoRepository.findOne(ID)).thenReturn(Optional.empty());
+		
+		mongoDBTodoService.findById(ID);
 	}
 
 }

@@ -12,5 +12,7 @@ public interface TodoService {
 	
 	List<TodoDTO> findAll();
 	
+	TodoDTO findById(String id);
+	
 	TodoDTO update(TodoDTO todo);
 }
