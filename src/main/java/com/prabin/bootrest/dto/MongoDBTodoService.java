@@ -81,7 +81,14 @@ public class MongoDBTodoService implements TodoService {
 
 	@Override
 	public TodoDTO update(TodoDTO todo) {
-		return null;
+		LOGGER.info("Updating todo entry with info", todo);
+		
+		Todo updated = findTodoByid(todo.getId());
+		updated.update(todo.getTitle(), todo.getDescription());
+		updated = todoRepository.save(updated);
+		
+		LOGGER.info("Updated todo entry with info", updated);
+		return convertToDTO(updated);
 	}
 
 	@Override
