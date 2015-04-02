@@ -9,11 +9,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
+
 import static org.assertj.core.api.Assertions.assertThat;
+
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +28,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.neo4j.cypher.internal.compiler.v2_1.planner.logical.findShortestPaths;
+
+
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.prabin.bootrest.builder.TodoBuilder;
 import com.prabin.bootrest.builder.TodoDTOBuilder;
@@ -63,9 +72,23 @@ public class MongoDBTodoServiceTest {
 		Todo savedTodo = savedTodoArgument.getValue();
 		assertThatTodo(savedTodo).hasTitle(TITLE).hasDescription(DESCRIPTION);
 	}
+	
+	@Test
+	public void create_ReturnsInfoOfCreatedTodoEntry() throws Exception {
+		TodoDTO newTodo = new TodoDTOBuilder().title(TITLE).description(DESCRIPTION).build();
+		
+		when(mockTodoRepository.save(isA(Todo.class))).thenAnswer(invocation -> {
+			Todo persisted = (Todo) invocation.getArguments()[0];
+			ReflectionTestUtils.setField(persisted, "id", ID);
+			return persisted;
+		});
+		
+		TodoDTO returned = mongoDBTodoService.create(newTodo);
+		assertThatTodoDTO(returned).hasId(ID).hasTitle(TITLE).hasDescription(DESCRIPTION);
+	}
 
 	@Test
-	public void testDeleteTodoEntry_ReturnDeletedTodoEntry() throws Exception {
+	public void delete_DeleteTodoEntry_ReturnDeletedTodoEntry() throws Exception {
 		Todo deleted = new TodoBuilder().id(ID).title(TITLE)
 				.description(DESCRIPTION).build();
 		
@@ -74,6 +97,17 @@ public class MongoDBTodoServiceTest {
 		mongoDBTodoService.delete(ID);
 		
 		verify(mockTodoRepository, times(1)).delete(deleted);
+	}
+	
+	@Test
+	public void delete_DeleteAndReturnTheDeletedTodoEntry() throws Exception {
+		Todo deleted = new TodoBuilder().id(ID).title(TITLE).description(DESCRIPTION).build();
+		
+		when(mockTodoRepository.findOne(ID)).thenReturn(Optional.of(deleted));
+		
+		TodoDTO returned = mongoDBTodoService.delete(ID);
+		
+		assertThatTodoDTO(returned).hasId(ID).hasTitle(TITLE).hasDescription(DESCRIPTION);
 	}
 	
 	@Test
