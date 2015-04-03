@@ -140,5 +140,27 @@ public class MongoDBTodoServiceTest {
 		
 		mongoDBTodoService.findById(ID);
 	}
+	
+	@Test(expected = TodoNotFoundException.class)
+	public void update_UpdatedTodoEntryNotFound_ShouldThrowException() throws Exception {
+		when(mockTodoRepository.findOne(ID)).thenReturn(Optional.empty());
+		
+		TodoDTO updated = new TodoDTOBuilder().id(ID).build();
+		
+		mongoDBTodoService.update(updated);
+	}
+	
+	@Test
+	public void update_UpdatedTodoEntryFound_ShouldReturnTheUpdatedTodoEntry() throws Exception {
+		Todo existing = new TodoBuilder().id(ID).build();
+		
+		when(mockTodoRepository.findOne(ID)).thenReturn(Optional.of(existing));
+		when(mockTodoRepository.save(existing)).thenReturn(existing);
+		
+		TodoDTO updated = new TodoDTOBuilder().id(ID).title(TITLE).description(DESCRIPTION).build();
+		
+		TodoDTO returned = mongoDBTodoService.update(updated);
+		assertThatTodoDTO(returned).hasId(ID).hasTitle(TITLE).hasDescription(DESCRIPTION);
+	}
 
 }
