@@ -62,4 +62,13 @@ public class TodoController {
     	return deleted;
     }
     
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public TodoDTO findById(@PathVariable("id") String id) {
+    	LOGGER.info("Finding todo entry with id ", id);
+    	
+    	TodoDTO todoEntry = service.findById(id);
+    	LOGGER.info("Found todo entry with information", todoEntry);
+    	
+    	return todoEntry;
+    }
 }
