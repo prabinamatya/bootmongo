@@ -1,10 +1,10 @@
 package com.prabin.bootrest.dto;
 
-import com.prabin.bootrest.todo.Todo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.AbstractAssert;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.prabin.bootrest.todo.Todo;
 
 public class TodoAssert extends AbstractAssert<TodoAssert, Todo> {
 

@@ -2,24 +2,16 @@ package com.prabin.bootrest.dto;
 
 import static com.prabin.bootrest.dto.TodoAssert.assertThatTodo;
 import static com.prabin.bootrest.dto.TodoDTOAssert.assertThatTodoDTO;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +19,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.neo4j.cypher.internal.compiler.v2_1.planner.logical.findShortestPaths;
-
-
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.prabin.bootrest.builder.TodoBuilder;
