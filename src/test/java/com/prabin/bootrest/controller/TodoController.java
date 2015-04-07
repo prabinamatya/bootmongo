@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.prabin.bootrest.dto.MongoDBTodoService;
 import com.prabin.bootrest.dto.TodoDTO;
 import com.prabin.bootrest.dto.TodoNotFoundException;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(value="/api/todo", description = "Todo entry")
 @RequestMapping("/api/todo")
 public class TodoController {
 
@@ -33,6 +36,7 @@ public class TodoController {
     	this.service = service;
     }
     
+    @ApiOperation(value="Create a new todo entry")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public TodoDTO create(@RequestBody @Valid TodoDTO todoEntry) {
@@ -44,6 +48,7 @@ public class TodoController {
     	return created;
     }
     
+    @ApiOperation(value="Find all the todo entries")
     @RequestMapping(method = RequestMethod.GET)
     List<TodoDTO> findAll() {
     	LOGGER.info("Finding all todo entries");
@@ -54,6 +59,7 @@ public class TodoController {
     	return todoEntries;
     }
     
+    @ApiOperation(value="Delete the todo entry of specific id")
     @RequestMapping(value= "{id}", method = RequestMethod.DELETE)
     public TodoDTO delete(@PathVariable("id") String id) {
     	LOGGER.info("Deleting todo entry with id: ", id);
@@ -64,6 +70,7 @@ public class TodoController {
     	return deleted;
     }
     
+    @ApiOperation(value="Find the todo entry of specific id")
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public TodoDTO findById(@PathVariable("id") String id) {
     	LOGGER.info("Finding todo entry with id ", id);
