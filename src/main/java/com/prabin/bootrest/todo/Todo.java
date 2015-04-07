@@ -2,6 +2,9 @@ package com.prabin.bootrest.todo;
 
 import org.springframework.data.annotation.Id;
 
+import com.wordnik.swagger.annotations.ApiModel;
+
+@ApiModel
 public class Todo {
 	
 	public static final int MAX_LENGTH_DESCRIPTION = 500;
