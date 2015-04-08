@@ -3,6 +3,7 @@ package com.prabin.bootrest.todo;
 import org.springframework.data.annotation.Id;
 
 import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
 @ApiModel
 public class Todo {
@@ -28,14 +29,17 @@ public class Todo {
 		return new TodoBuilder();
 	}
 	
+	@ApiModelProperty(required = true)
 	public String getId() {
 		return id;
 	}
 	
+	@ApiModelProperty(required = true)
 	public String getDescription() {
 		return description;
 	}
 
+	@ApiModelProperty(required = true)
 	public String getTitle() {
 		return title;
 	}
